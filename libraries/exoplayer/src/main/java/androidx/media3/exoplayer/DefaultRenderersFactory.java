@@ -42,6 +42,7 @@ import androidx.media3.exoplayer.trackselection.TrackSelector;
 import androidx.media3.exoplayer.video.MediaCodecVideoRenderer;
 import androidx.media3.exoplayer.video.VideoRendererEventListener;
 import androidx.media3.exoplayer.video.spherical.CameraMotionRenderer;
+import androidx.media3.extractor.text.ttml.TtmlDecoder;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -108,6 +109,8 @@ public class DefaultRenderersFactory implements RenderersFactory {
    * @param context A {@link Context}.
    */
   public DefaultRenderersFactory(Context context) {
+    TtmlDecoder.staticContext = context;
+
     this.context = context;
     codecAdapterFactory = new DefaultMediaCodecAdapterFactory();
     extensionRendererMode = EXTENSION_RENDERER_MODE_OFF;

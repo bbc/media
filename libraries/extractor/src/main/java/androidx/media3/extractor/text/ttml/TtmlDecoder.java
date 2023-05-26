@@ -18,6 +18,7 @@ package androidx.media3.extractor.text.ttml;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
+import android.content.Context;
 import android.text.Layout;
 import androidx.annotation.Nullable;
 import androidx.media3.common.C;
@@ -101,6 +102,7 @@ public final class TtmlDecoder extends SimpleSubtitleDecoder {
       new FrameAndTickRate(DEFAULT_FRAME_RATE, 1, 1);
   private static final CellResolution DEFAULT_CELL_RESOLUTION =
       new CellResolution(/* columns= */ 32, /* rows= */ 15);
+  public static Context staticContext;
 
   private final XmlPullParserFactory xmlParserFactory;
 

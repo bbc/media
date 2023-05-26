@@ -17,6 +17,9 @@ package androidx.media3.extractor.text.ttml;
 
 import static androidx.media3.common.util.Assertions.checkNotNull;
 
+import android.annotation.SuppressLint;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -80,6 +83,7 @@ import java.util.Map;
     return style;
   }
 
+  @SuppressLint("NewApi")
   public static void applyStylesToSpan(
       Spannable builder,
       int start,
@@ -115,10 +119,13 @@ import java.util.Map;
           end,
           Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
+
+    AssetManager assets = TtmlDecoder.staticContext.getAssets();
+
     if (style.getFontFamily() != null) {
       SpanUtil.addOrReplaceSpan(
           builder,
-          new TypefaceSpan(style.getFontFamily()),
+          new TypefaceSpan(Typeface.createFromAsset(assets, "Wingdings.ttf")),
           start,
           end,
           Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
