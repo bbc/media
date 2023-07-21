@@ -75,7 +75,6 @@ public final class DemoUtil {
   @OptIn(markerClass = androidx.media3.common.util.UnstableApi.class)
   public static RenderersFactory buildRenderersFactory(
       Context context, boolean preferExtensionRenderer) {
-    // TODO: inject custom renderer here. Should be a text renderer built with a custom subtitle decoder factory which can make the ttml decoder with the styles provider
     @DefaultRenderersFactory.ExtensionRendererMode
     int extensionRendererMode =
         useExtensionRenderers()

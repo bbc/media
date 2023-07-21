@@ -17,7 +17,6 @@ package androidx.media3.extractor.text.ttml;
 
 import static androidx.media3.common.util.Assertions.checkNotNull;
 
-import android.annotation.SuppressLint;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -81,7 +80,6 @@ import java.util.Map;
     return style;
   }
 
-  @SuppressLint("NewApi")
   public static void applyStylesToSpan(
       Spannable builder,
       int start,
