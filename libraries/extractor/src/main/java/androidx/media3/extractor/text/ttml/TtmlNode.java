@@ -24,7 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.media3.common.C;
 import androidx.media3.common.text.Cue;
 import androidx.media3.common.util.Assertions;
-import androidx.media3.extractor.text.TypefaceSpanFactory;
+import androidx.media3.extractor.text.TtmlTypefaceSpanFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -134,7 +134,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
   private final HashMap<String, Integer> nodeEndsByRegion;
 
   private @MonotonicNonNull List<TtmlNode> children;
-  @Nullable private final TypefaceSpanFactory typefaceFactory;
+  @Nullable private final TtmlTypefaceSpanFactory typefaceFactory;
 
   public static TtmlNode buildTextNode(String text) {
     return new TtmlNode(
@@ -159,7 +159,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
       String regionId,
       @Nullable String imageId,
       @Nullable TtmlNode parent,
-      @Nullable TypefaceSpanFactory typefaceFactory) {
+      @Nullable TtmlTypefaceSpanFactory typefaceFactory) {
     return new TtmlNode(
         tag, /* text= */ null, startTimeUs, endTimeUs, style, styleIds, regionId, imageId, parent, typefaceFactory);
   }
@@ -174,7 +174,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
       String regionId,
       @Nullable String imageId,
       @Nullable TtmlNode parent,
-      @Nullable TypefaceSpanFactory typefaceFactory) {
+      @Nullable TtmlTypefaceSpanFactory typefaceFactory) {
     this.tag = tag;
     this.text = text;
     this.imageId = imageId;

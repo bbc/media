@@ -32,7 +32,7 @@ import androidx.media3.common.util.XmlPullParserUtil;
 import androidx.media3.extractor.text.SimpleSubtitleDecoder;
 import androidx.media3.extractor.text.Subtitle;
 import androidx.media3.extractor.text.SubtitleDecoderException;
-import androidx.media3.extractor.text.TypefaceSpanFactory;
+import androidx.media3.extractor.text.TtmlTypefaceSpanFactory;
 import com.google.common.base.Ascii;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -102,7 +102,7 @@ public final class TtmlDecoder extends SimpleSubtitleDecoder {
       new FrameAndTickRate(DEFAULT_FRAME_RATE, 1, 1);
   private static final CellResolution DEFAULT_CELL_RESOLUTION =
       new CellResolution(/* columns= */ 32, /* rows= */ 15);
-  @Nullable private final TypefaceSpanFactory typefaceFactory;
+  @Nullable private final TtmlTypefaceSpanFactory typefaceFactory;
 
   private final XmlPullParserFactory xmlParserFactory;
 
@@ -110,7 +110,7 @@ public final class TtmlDecoder extends SimpleSubtitleDecoder {
     this(null);
   }
 
-  public TtmlDecoder(@Nullable TypefaceSpanFactory typefaceFactory) {
+  public TtmlDecoder(@Nullable TtmlTypefaceSpanFactory typefaceFactory) {
     super("TtmlDecoder");
     this.typefaceFactory = typefaceFactory;
     try {
@@ -649,7 +649,7 @@ public final class TtmlDecoder extends SimpleSubtitleDecoder {
       @Nullable TtmlNode parent,
       Map<String, TtmlRegion> regionMap,
       FrameAndTickRate frameAndTickRate,
-      TypefaceSpanFactory typefaceFactory)
+      TtmlTypefaceSpanFactory typefaceFactory)
       throws SubtitleDecoderException {
     long duration = C.TIME_UNSET;
     long startTime = C.TIME_UNSET;
