@@ -102,15 +102,15 @@ public final class TtmlDecoder extends SimpleSubtitleDecoder {
       new FrameAndTickRate(DEFAULT_FRAME_RATE, 1, 1);
   private static final CellResolution DEFAULT_CELL_RESOLUTION =
       new CellResolution(/* columns= */ 32, /* rows= */ 15);
-  @Nullable private final TtmlTypefaceSpanFactory typefaceFactory;
+  private final TtmlTypefaceSpanFactory typefaceFactory;
 
   private final XmlPullParserFactory xmlParserFactory;
 
   public TtmlDecoder() {
-    this(null);
+    this(TtmlTypefaceSpanFactory.DEFAULT);
   }
 
-  public TtmlDecoder(@Nullable TtmlTypefaceSpanFactory typefaceFactory) {
+  public TtmlDecoder(TtmlTypefaceSpanFactory typefaceFactory) {
     super("TtmlDecoder");
     this.typefaceFactory = typefaceFactory;
     try {

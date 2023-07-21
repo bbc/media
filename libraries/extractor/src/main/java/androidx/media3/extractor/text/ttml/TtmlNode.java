@@ -134,7 +134,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
   private final HashMap<String, Integer> nodeEndsByRegion;
 
   private @MonotonicNonNull List<TtmlNode> children;
-  @Nullable private final TtmlTypefaceSpanFactory typefaceFactory;
+  private final TtmlTypefaceSpanFactory typefaceFactory;
 
   public static TtmlNode buildTextNode(String text) {
     return new TtmlNode(
@@ -147,7 +147,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
         ANONYMOUS_REGION_ID,
         /* imageId= */ null,
         /* parent= */ null,
-        /* typefaceFactory= */ null);
+        /* typefaceFactory= */ TtmlTypefaceSpanFactory.DEFAULT);
   }
 
   public static TtmlNode buildNode(
@@ -159,7 +159,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
       String regionId,
       @Nullable String imageId,
       @Nullable TtmlNode parent,
-      @Nullable TtmlTypefaceSpanFactory typefaceFactory) {
+      TtmlTypefaceSpanFactory typefaceFactory) {
     return new TtmlNode(
         tag, /* text= */ null, startTimeUs, endTimeUs, style, styleIds, regionId, imageId, parent, typefaceFactory);
   }
@@ -174,7 +174,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
       String regionId,
       @Nullable String imageId,
       @Nullable TtmlNode parent,
-      @Nullable TtmlTypefaceSpanFactory typefaceFactory) {
+      TtmlTypefaceSpanFactory typefaceFactory) {
     this.tag = tag;
     this.text = text;
     this.imageId = imageId;

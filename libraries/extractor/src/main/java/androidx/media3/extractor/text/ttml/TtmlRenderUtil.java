@@ -91,7 +91,7 @@ import java.util.Map;
       @Nullable TtmlNode parent,
       Map<String, TtmlStyle> globalStyles,
       @Cue.VerticalType int verticalType,
-      @Nullable TtmlTypefaceSpanFactory typefaceFactory) {
+      TtmlTypefaceSpanFactory typefaceFactory) {
 
     if (style.getStyle() != TtmlStyle.UNSPECIFIED) {
       builder.setSpan(
@@ -121,17 +121,9 @@ import java.util.Map;
     }
 
     if (style.getFontFamily() != null) {
-
-      TypefaceSpan typefaceSpan;
-      if (typefaceFactory == null) {
-        typefaceSpan = new TypefaceSpan(style.getFontFamily());
-      } else {
-        typefaceSpan = typefaceFactory.createSpan(style.getFontFamily());
-      }
-
       SpanUtil.addOrReplaceSpan(
           builder,
-          typefaceSpan,
+          typefaceFactory.createSpan(style.getFontFamily()),
           start,
           end,
           Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

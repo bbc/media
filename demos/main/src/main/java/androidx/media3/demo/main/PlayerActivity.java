@@ -15,6 +15,7 @@
  */
 package androidx.media3.demo.main;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -323,10 +324,13 @@ public class PlayerActivity extends AppCompatActivity
   }
 
   @OptIn(markerClass = UnstableApi.class)
+  @SuppressLint("NewApi")
   private void setRenderersFactory(
       ExoPlayer.Builder playerBuilder, boolean preferExtensionDecoders) {
-    RenderersFactory renderersFactory =
+
+     RenderersFactory renderersFactory =
         new CustomRendererFactory(this);
+
     playerBuilder.setRenderersFactory(renderersFactory);
   }
 
