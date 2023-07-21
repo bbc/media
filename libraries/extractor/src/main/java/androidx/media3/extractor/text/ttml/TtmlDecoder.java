@@ -32,7 +32,7 @@ import androidx.media3.common.util.XmlPullParserUtil;
 import androidx.media3.extractor.text.SimpleSubtitleDecoder;
 import androidx.media3.extractor.text.Subtitle;
 import androidx.media3.extractor.text.SubtitleDecoderException;
-import androidx.media3.extractor.text.TtmlTypefaceSpanFactory;
+import androidx.media3.extractor.text.TtmlFontSpanFactory;
 import com.google.common.base.Ascii;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -102,17 +102,17 @@ public final class TtmlDecoder extends SimpleSubtitleDecoder {
       new FrameAndTickRate(DEFAULT_FRAME_RATE, 1, 1);
   private static final CellResolution DEFAULT_CELL_RESOLUTION =
       new CellResolution(/* columns= */ 32, /* rows= */ 15);
-  private final TtmlTypefaceSpanFactory typefaceFactory;
+  private final TtmlFontSpanFactory fontSpanFactory;
 
   private final XmlPullParserFactory xmlParserFactory;
 
   public TtmlDecoder() {
-    this(TtmlTypefaceSpanFactory.DEFAULT);
+    this(TtmlFontSpanFactory.DEFAULT);
   }
 
-  public TtmlDecoder(TtmlTypefaceSpanFactory typefaceFactory) {
+  public TtmlDecoder(TtmlFontSpanFactory fontSpanFactory) {
     super("TtmlDecoder");
-    this.typefaceFactory = typefaceFactory;
+    this.fontSpanFactory = fontSpanFactory;
     try {
       xmlParserFactory = XmlPullParserFactory.newInstance();
       xmlParserFactory.setNamespaceAware(true);
@@ -156,7 +156,7 @@ public final class TtmlDecoder extends SimpleSubtitleDecoder {
               parseHeader(xmlParser, globalStyles, cellResolution, ttsExtent, regionMap, imageMap);
             } else {
               try {
-                TtmlNode node = parseNode(xmlParser, parent, regionMap, frameAndTickRate, typefaceFactory);
+                TtmlNode node = parseNode(xmlParser, parent, regionMap, frameAndTickRate, fontSpanFactory);
                 nodeStack.push(node);
                 if (parent != null) {
                   parent.addChild(node);
@@ -649,7 +649,7 @@ public final class TtmlDecoder extends SimpleSubtitleDecoder {
       @Nullable TtmlNode parent,
       Map<String, TtmlRegion> regionMap,
       FrameAndTickRate frameAndTickRate,
-      TtmlTypefaceSpanFactory typefaceFactory)
+      TtmlFontSpanFactory fontSpanFactory)
       throws SubtitleDecoderException {
     long duration = C.TIME_UNSET;
     long startTime = C.TIME_UNSET;
@@ -717,7 +717,7 @@ public final class TtmlDecoder extends SimpleSubtitleDecoder {
     }
 
     return TtmlNode.buildNode(
-        parser.getName(), startTime, endTime, style, styleIds, regionId, imageId, parent, typefaceFactory);
+        parser.getName(), startTime, endTime, style, styleIds, regionId, imageId, parent, fontSpanFactory);
   }
 
   private static boolean isSupportedTag(String tag) {

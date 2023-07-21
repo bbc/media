@@ -2,9 +2,9 @@ package androidx.media3.extractor.text;
 
 import android.text.style.TypefaceSpan;
 
-public interface TtmlTypefaceSpanFactory {
+public interface TtmlFontSpanFactory {
 
   TypefaceSpan createSpan(String fontFamily);
 
-  TtmlTypefaceSpanFactory DEFAULT = TypefaceSpan::new;
+  TtmlFontSpanFactory DEFAULT = TypefaceSpan::new;
 }

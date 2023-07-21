@@ -27,7 +27,6 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
-import android.text.style.TypefaceSpan;
 import android.text.style.UnderlineSpan;
 import androidx.annotation.Nullable;
 import androidx.media3.common.text.Cue;
@@ -38,7 +37,7 @@ import androidx.media3.common.text.TextAnnotation;
 import androidx.media3.common.text.TextEmphasisSpan;
 import androidx.media3.common.util.Log;
 import androidx.media3.common.util.Util;
-import androidx.media3.extractor.text.TtmlTypefaceSpanFactory;
+import androidx.media3.extractor.text.TtmlFontSpanFactory;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Map;
@@ -91,7 +90,7 @@ import java.util.Map;
       @Nullable TtmlNode parent,
       Map<String, TtmlStyle> globalStyles,
       @Cue.VerticalType int verticalType,
-      TtmlTypefaceSpanFactory typefaceFactory) {
+      TtmlFontSpanFactory fontSpanFactory) {
 
     if (style.getStyle() != TtmlStyle.UNSPECIFIED) {
       builder.setSpan(
@@ -123,7 +122,7 @@ import java.util.Map;
     if (style.getFontFamily() != null) {
       SpanUtil.addOrReplaceSpan(
           builder,
-          typefaceFactory.createSpan(style.getFontFamily()),
+          fontSpanFactory.createSpan(style.getFontFamily()),
           start,
           end,
           Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

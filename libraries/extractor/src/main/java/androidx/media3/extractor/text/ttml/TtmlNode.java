@@ -24,7 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.media3.common.C;
 import androidx.media3.common.text.Cue;
 import androidx.media3.common.util.Assertions;
-import androidx.media3.extractor.text.TtmlTypefaceSpanFactory;
+import androidx.media3.extractor.text.TtmlFontSpanFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -134,7 +134,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
   private final HashMap<String, Integer> nodeEndsByRegion;
 
   private @MonotonicNonNull List<TtmlNode> children;
-  private final TtmlTypefaceSpanFactory typefaceFactory;
+  private final TtmlFontSpanFactory fontSpanFactory;
 
   public static TtmlNode buildTextNode(String text) {
     return new TtmlNode(
@@ -147,7 +147,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
         ANONYMOUS_REGION_ID,
         /* imageId= */ null,
         /* parent= */ null,
-        /* typefaceFactory= */ TtmlTypefaceSpanFactory.DEFAULT);
+        /* fontSpanFactory= */ TtmlFontSpanFactory.DEFAULT);
   }
 
   public static TtmlNode buildNode(
@@ -159,9 +159,9 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
       String regionId,
       @Nullable String imageId,
       @Nullable TtmlNode parent,
-      TtmlTypefaceSpanFactory typefaceFactory) {
+      TtmlFontSpanFactory fontSpanFactory) {
     return new TtmlNode(
-        tag, /* text= */ null, startTimeUs, endTimeUs, style, styleIds, regionId, imageId, parent, typefaceFactory);
+        tag, /* text= */ null, startTimeUs, endTimeUs, style, styleIds, regionId, imageId, parent, fontSpanFactory);
   }
 
   private TtmlNode(
@@ -174,7 +174,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
       String regionId,
       @Nullable String imageId,
       @Nullable TtmlNode parent,
-      TtmlTypefaceSpanFactory typefaceFactory) {
+      TtmlFontSpanFactory fontSpanFactory) {
     this.tag = tag;
     this.text = text;
     this.imageId = imageId;
@@ -187,7 +187,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
     this.parent = parent;
     nodeStartsByRegion = new HashMap<>();
     nodeEndsByRegion = new HashMap<>();
-    this.typefaceFactory = typefaceFactory;
+    this.fontSpanFactory = fontSpanFactory;
   }
 
   public boolean isActive(long timeUs) {
@@ -412,7 +412,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
     }
     if (resolvedStyle != null) {
       TtmlRenderUtil.applyStylesToSpan(
-          text, start, end, resolvedStyle, parent, globalStyles, verticalType, typefaceFactory);
+          text, start, end, resolvedStyle, parent, globalStyles, verticalType, fontSpanFactory);
       if (TAG_P.equals(tag)) {
         if (resolvedStyle.getShearPercentage() != TtmlStyle.UNSPECIFIED_SHEAR) {
           // Shear style should only be applied to P nodes
