@@ -11,13 +11,13 @@ import androidx.media3.exoplayer.text.SubtitleDecoderFactory;
 import androidx.media3.exoplayer.text.TextOutput;
 import androidx.media3.exoplayer.text.TextRenderer;
 import androidx.media3.extractor.text.SubtitleDecoder;
-import androidx.media3.extractor.text.SubtitleStylesProvider;
+import androidx.media3.extractor.text.TypefaceSpanFactory;
 import androidx.media3.extractor.text.ttml.TtmlDecoder;
 import java.util.ArrayList;
 
 // should be like the default one, plus a custom text renderer using the SubtitleDecoderFactory that can build the TtmlDecoder with the user style provider
 public class CustomRendererFactory extends DefaultRenderersFactory {
-  private final SubtitleStylesProvider subtitleStylesProvider;
+  private final TypefaceSpanFactory typefaceSpanFactory;
 
   /**
    * @param context A {@link Context}.
@@ -27,7 +27,7 @@ public class CustomRendererFactory extends DefaultRenderersFactory {
 
     ArrayList<Typeface> customTypefaces = new ArrayList<>();
     customTypefaces.add(Typeface.createFromAsset(context.getAssets(), "Wingdings.ttf"));
-    subtitleStylesProvider = new SubtitleStylesProvider(customTypefaces);
+    typefaceSpanFactory = new TypefaceSpanFactory(customTypefaces);
   }
 
   @Override
@@ -42,7 +42,7 @@ public class CustomRendererFactory extends DefaultRenderersFactory {
 
           @Override
           public SubtitleDecoder createDecoder(Format format) {
-            return new TtmlDecoder(subtitleStylesProvider);
+            return new TtmlDecoder(typefaceSpanFactory);
           }
         });
 

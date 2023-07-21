@@ -5,11 +5,11 @@ import android.graphics.Typeface;
 import android.text.style.TypefaceSpan;
 import java.util.List;
 
-public class SubtitleStylesProvider {
+public class TypefaceSpanFactory {
 
   private List<Typeface> typefaces;
 
-  public SubtitleStylesProvider(List<Typeface> typefaces) {
+  public TypefaceSpanFactory(List<Typeface> typefaces) {
     this.typefaces = typefaces;
   }
 

@@ -18,8 +18,6 @@ package androidx.media3.extractor.text.ttml;
 import static androidx.media3.common.util.Assertions.checkNotNull;
 
 import android.annotation.SuppressLint;
-import android.content.res.AssetManager;
-import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -29,7 +27,6 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
-import android.text.style.TypefaceSpan;
 import android.text.style.UnderlineSpan;
 import androidx.annotation.Nullable;
 import androidx.media3.common.text.Cue;
@@ -40,11 +37,9 @@ import androidx.media3.common.text.TextAnnotation;
 import androidx.media3.common.text.TextEmphasisSpan;
 import androidx.media3.common.util.Log;
 import androidx.media3.common.util.Util;
-import androidx.media3.extractor.text.SubtitleStylesProvider;
+import androidx.media3.extractor.text.TypefaceSpanFactory;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
-import java.util.List;
 import java.util.Map;
 
 /** Package internal utility class to render styled <code>TtmlNode</code>s. */
@@ -95,7 +90,7 @@ import java.util.Map;
       @Nullable TtmlNode parent,
       Map<String, TtmlStyle> globalStyles,
       @Cue.VerticalType int verticalType,
-      @Nullable SubtitleStylesProvider userStylesProvider) {
+      @Nullable TypefaceSpanFactory typefaceFactory) {
 
     if (style.getStyle() != TtmlStyle.UNSPECIFIED) {
       builder.setSpan(
@@ -127,7 +122,7 @@ import java.util.Map;
     if (style.getFontFamily() != null) {
       SpanUtil.addOrReplaceSpan(
           builder,
-          userStylesProvider.createSpan(style.getFontFamily()),
+          typefaceFactory.createSpan(style.getFontFamily()),
           start,
           end,
           Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
