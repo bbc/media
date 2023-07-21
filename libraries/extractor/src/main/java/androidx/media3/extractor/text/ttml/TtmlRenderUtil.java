@@ -40,8 +40,11 @@ import androidx.media3.common.text.TextAnnotation;
 import androidx.media3.common.text.TextEmphasisSpan;
 import androidx.media3.common.util.Log;
 import androidx.media3.common.util.Util;
+import androidx.media3.extractor.text.SubtitleStylesProvider;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 import java.util.Map;
 
 /** Package internal utility class to render styled <code>TtmlNode</code>s. */
@@ -91,7 +94,8 @@ import java.util.Map;
       TtmlStyle style,
       @Nullable TtmlNode parent,
       Map<String, TtmlStyle> globalStyles,
-      @Cue.VerticalType int verticalType) {
+      @Cue.VerticalType int verticalType,
+      @Nullable SubtitleStylesProvider userStylesProvider) {
 
     if (style.getStyle() != TtmlStyle.UNSPECIFIED) {
       builder.setSpan(
@@ -120,12 +124,10 @@ import java.util.Map;
           Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
-    AssetManager assets = TtmlDecoder.staticContext.getAssets();
-
     if (style.getFontFamily() != null) {
       SpanUtil.addOrReplaceSpan(
           builder,
-          new TypefaceSpan(Typeface.createFromAsset(assets, "Wingdings.ttf")),
+          userStylesProvider.createSpan(style.getFontFamily()),
           start,
           end,
           Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

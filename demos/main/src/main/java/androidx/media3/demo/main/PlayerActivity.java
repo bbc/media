@@ -326,7 +326,7 @@ public class PlayerActivity extends AppCompatActivity
   private void setRenderersFactory(
       ExoPlayer.Builder playerBuilder, boolean preferExtensionDecoders) {
     RenderersFactory renderersFactory =
-        DemoUtil.buildRenderersFactory(/* context= */ this, preferExtensionDecoders);
+        new CustomRendererFactory(this);
     playerBuilder.setRenderersFactory(renderersFactory);
   }
 

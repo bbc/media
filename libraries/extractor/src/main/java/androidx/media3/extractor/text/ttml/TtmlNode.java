@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.media3.common.C;
 import androidx.media3.common.text.Cue;
 import androidx.media3.common.util.Assertions;
+import androidx.media3.extractor.text.SubtitleStylesProvider;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -133,6 +134,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
   private final HashMap<String, Integer> nodeEndsByRegion;
 
   private @MonotonicNonNull List<TtmlNode> children;
+  @Nullable private final SubtitleStylesProvider userStylesProvider;
 
   public static TtmlNode buildTextNode(String text) {
     return new TtmlNode(
@@ -144,7 +146,8 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
         /* styleIds= */ null,
         ANONYMOUS_REGION_ID,
         /* imageId= */ null,
-        /* parent= */ null);
+        /* parent= */ null,
+        /* userStylesProvider= */ null);
   }
 
   public static TtmlNode buildNode(
@@ -155,9 +158,10 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
       @Nullable String[] styleIds,
       String regionId,
       @Nullable String imageId,
-      @Nullable TtmlNode parent) {
+      @Nullable TtmlNode parent,
+      @Nullable SubtitleStylesProvider userStylesProvider) {
     return new TtmlNode(
-        tag, /* text= */ null, startTimeUs, endTimeUs, style, styleIds, regionId, imageId, parent);
+        tag, /* text= */ null, startTimeUs, endTimeUs, style, styleIds, regionId, imageId, parent, userStylesProvider);
   }
 
   private TtmlNode(
@@ -169,7 +173,8 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
       @Nullable String[] styleIds,
       String regionId,
       @Nullable String imageId,
-      @Nullable TtmlNode parent) {
+      @Nullable TtmlNode parent,
+      @Nullable SubtitleStylesProvider userStylesProvider) {
     this.tag = tag;
     this.text = text;
     this.imageId = imageId;
@@ -182,6 +187,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
     this.parent = parent;
     nodeStartsByRegion = new HashMap<>();
     nodeEndsByRegion = new HashMap<>();
+    this.userStylesProvider = userStylesProvider;
   }
 
   public boolean isActive(long timeUs) {
@@ -406,7 +412,7 @@ import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
     }
     if (resolvedStyle != null) {
       TtmlRenderUtil.applyStylesToSpan(
-          text, start, end, resolvedStyle, parent, globalStyles, verticalType);
+          text, start, end, resolvedStyle, parent, globalStyles, verticalType, userStylesProvider);
       if (TAG_P.equals(tag)) {
         if (resolvedStyle.getShearPercentage() != TtmlStyle.UNSPECIFIED_SHEAR) {
           // Shear style should only be applied to P nodes
